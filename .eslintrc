@@ -1,0 +1,28 @@
+{
+    "env": {
+        "es6": true,
+        "jest/globals": true
+    },
+    "plugins": [
+        "jest"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "google"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": ["warn", 4],
+        "require-jsdoc": "warn",
+        "object-curly-spacing": ["warn", "always"],
+        "block-spacing": ["warn", "always"],
+        "max-len": ["warn", { "ignoreComments": true, "ignoreStrings": true }],
+    }
+}
