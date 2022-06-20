@@ -8,8 +8,8 @@ fcl.config({
     'accessNode.api': 'https://testnet.onflow.org',
 });
 
-// setup subscription
-subscribe({
+// setup subscription, optionally caching the unsubscribe method
+const unsubscribe = subscribe({
     // inject method to get current block height
     block: fcl.block,
     // build fcl query to subscribe to, typically fcl.send with an
@@ -32,6 +32,8 @@ subscribe({
         fcl.decode(response).then((events) => {
             if (events && events.length > 0) {
                 console.log(events);
+                // can unsubscribe when needed
+                unsubscribe();
             }
         });
     },
