@@ -3,12 +3,17 @@
 import * as fcl from '@onflow/fcl';
 import subscribe from './fcl-subscribe';
 
+// use standard fcl methods to initialize
 fcl.config({
     'accessNode.api': 'https://testnet.onflow.org',
 });
 
+// setup subscription
 subscribe({
+    // inject method to get current block height
     block: fcl.block,
+    // build fcl query to subscribe to, typically fcl.send with an
+    // fcl.getEventsAtBlockHeightRange builder
     getQuery: function(context) {
         console.debug('fcl.send for context =', context);
         return fcl.send([
@@ -19,9 +24,11 @@ subscribe({
             ),
         ]);
     },
-    abortOnError: true,
+    // process the subscription response
     onResponse: function(response) {
         console.debug('checking response for events');
+        // when subscribing to fcl.send, the response must be decoded with
+        // fcl.decode
         fcl.decode(response).then((events) => {
             if (events && events.length > 0) {
                 console.log(events);
@@ -29,4 +36,6 @@ subscribe({
         });
     },
     onError: console.error,
+    // optionally abort the subscription on error (vs. continuing to poll)
+    abortOnError: true,
 });
