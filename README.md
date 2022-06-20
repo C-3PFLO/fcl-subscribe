@@ -40,3 +40,9 @@ subscribe({
 ```
 
 See [`demo.js`](demo/demo.js) for working sample and [`fcl-subscribe`](src/fcl-subscribe.js) for the full set of available options.
+
+The demo can be run using
+
+```
+npm run demo
+```
