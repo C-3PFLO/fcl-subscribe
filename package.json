@@ -1,6 +1,6 @@
 {
     "name": "fcl-subscribe",
-    "version": "0.0.1",
+    "version": "0.1.2",
     "description": "Subscribe to Flow blockchain events",
     "scripts": {
         "build": "babel src demo -d build",
@@ -24,14 +24,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://gitlab.com/c-3pflo1/fcl-subscribe.git"
+        "url": "https://github.com/C-3PFLO/fcl-subscribe.git"
     },
     "author": "",
     "license": "MIT",
     "bugs": {
-        "url": "https://gitlab.com/c-3pflo1/fcl-subscribe/issues"
+        "url": "https://github.com/C-3PFLO/fcl-subscribe/issues"
     },
-    "homepage": "https://gitlab.com/c-3pflo1/fcl-subscribe#readme",
+    "homepage": "https://github.com/C-3PFLO/fcl-subscribe#readme",
     "devDependencies": {
         "eslint": "^8.6.0",
         "eslint-config-google": "^0.14.0",

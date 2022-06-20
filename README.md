@@ -1,6 +1,6 @@
 # fcl-subscribe
 
-Subscribe to Flow blockchain events.
+Subscribe to Flow blockchain events, wrapping [`@onflow/fcl`](https://docs.onflow.org/fcl/).
 
 ### Motivation
 
@@ -14,9 +14,17 @@ This module implements `subscribe()` which allows clients to make the same `fcl.
 
 ### Usage
 
+Install as an `npm` package
+
+```
+npm install --save fcl-subscribe
+```
+
+Import `fcl-subscribe` and use it in conjunction with `@onflow/fcl`
+
 ```js
 import * as fcl from '@onflow/fcl';
-import subscribe from './fcl-subscribe';
+import subscribe from 'fcl-subscribe';
 
 fcl.config(/* arguments */)
 
