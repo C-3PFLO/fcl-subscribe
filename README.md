@@ -16,7 +16,7 @@ This module implements `subscribe()` which allows clients to make the same `fcl.
 
 ```js
 import * as fcl from '@onflow/fcl';
-import * as subscribe from 'fcl-subscribe';
+import subscribe from 'fcl-subscribe';
 
 // use standard fcl methods
 fcl.config( /*arguments*/ );
@@ -29,11 +29,9 @@ const unsubscribe = subscribe({
         // fcl.getEventsAtBlockHeightRange builder
         return fcl.send([
             fcl.getEventsAtBlockHeightRange(
-                eventName: 'MyEvent',
-                // block range set via context, automatically incremented by
-                // subscribe to enable crawling the blockchain
-                fromBlockHeight: context.fromBlockHeight,
-                toBlockHeight: context.toBlockHeight,
+                'MyEvent',
+                context.fromBlockHeight,
+                context.toBlockHeight,
             ),
         ]);
     },

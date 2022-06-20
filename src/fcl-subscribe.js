@@ -30,7 +30,7 @@ function subscribe(options) {
     * @private
     */
     function _loop() {
-        options.block(true)
+        options.block({ sealed: true })
             .then((response) => {
                 context.height = response.height;
                 // if no fromBlockHeight was provided, start from context.height

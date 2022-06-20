@@ -3,11 +3,11 @@
     "version": "0.0.1",
     "description": "Subscribe to Flow blockchain events",
     "scripts": {
-        "build": "babel src -d build",
+        "build": "babel src demo -d build",
         "check": "./node_modules/.bin/eslint src test",
         "test": "jest --coverage",
         "test:watch": "jest --coverage --watch",
-        "start": "npm run build; node build/main.js"
+        "demo": "npm run build; node build/demo.js"
     },
     "jest": {
         "reporters": [
@@ -43,7 +43,7 @@
         "@babel/cli": "^7.10.3",
         "@babel/core": "^7.10.3",
         "@babel/preset-env": "^7.10.3",
-        "@onflow/fcl": "^1.0.2",
-        "@onflow/types": "^1.0.1"
+        "@onflow/fcl": "^0.0.78",
+        "@onflow/types": "^0.0.6"
     }
 }
