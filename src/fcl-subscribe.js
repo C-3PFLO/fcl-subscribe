@@ -1,8 +1,5 @@
 /* global setTimeout */
 
-const sleepTime = 1000;
-const range = 249;
-
 /**
 * Subscribe an @onflow/fcl request across a range of block heights, including
 * newly created blocks.
@@ -22,9 +19,9 @@ const range = 249;
 */
 function subscribe(options) {
     const context = {
-        range: options.range || range,
         fromBlockHeight: options.fromBlockHeight,
-        sleepTime: options.sleepTime || sleepTime,
+        range: options.range || 249,
+        sleepTime: options.sleepTime || 1000,
         abortOnError: typeof options.abortOnError === 'undefined' ?
             false : options.abortOnError,
     };
@@ -43,7 +40,8 @@ function subscribe(options) {
                     context.fromBlockHeight : context.height;
                 context.remaining = context.height - context.fromBlockHeight;
                 context.toBlockHeight = context.fromBlockHeight +
-                    (context.remaining >= range ? range : context.remaining);
+                    (context.remaining >= context.range ?
+                        context.range : context.remaining);
                 if (context.remaining > 0) {
                     return options.getQuery(context)
                         .then((response) => {
