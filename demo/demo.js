@@ -1,6 +1,9 @@
 /* global console */
 
 import * as fcl from '@onflow/fcl';
+// clients should install fcl-subscribe as a node_module and import
+// from 'fcl-subscribe' directly.  This demo imports from the current
+// source version instead (ie: './').
 import subscribe from './fcl-subscribe';
 
 // use standard fcl methods to initialize
