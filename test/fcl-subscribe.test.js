@@ -1,4 +1,4 @@
-import subscribe from '../src/fcl-subscribe';
+import { subscribe } from '../src/fcl-subscribe';
 
 describe('fcl-subscribe', () => {
     let height;
