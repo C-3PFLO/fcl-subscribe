@@ -3,7 +3,7 @@
 const debug = require('debug')('fcl-subscribe');
 
 /**
-* Subscribe an @onflow/fcl request across a range of block heights, including
+* Subscribe to an @onflow/fcl request across a range of block heights, including
 * newly created blocks.
 * @public
 * @param {Object} options
@@ -20,12 +20,13 @@ const debug = require('debug')('fcl-subscribe');
 * @return {Function} unsubscribe
 */
 function subscribe(options) {
-    debug('initializing subscription for options: %O', options);
+    debug('initializing for options: %O', options);
 
     const context = {
+        event: options.event,
         fromBlockHeight: options.fromBlockHeight,
-        range: options.range || 249,
         sleepTime: options.sleepTime || 1000,
+        range: options.range || 249,
         abortOnError: typeof options.abortOnError === 'undefined' ?
             false : options.abortOnError,
     };
@@ -48,14 +49,15 @@ function subscribe(options) {
                     (context.remaining >= context.range ?
                         context.range : context.remaining);
                 if (context.remaining > 0) {
-                    debug('querying fromBlockHeight=%d toBlockHeight=%d (remaining=%d)',
+                    debug('querying %s fromBlockHeight=%d toBlockHeight=%d (remaining=%d)',
+                        context.event || '',
                         context.fromBlockHeight,
                         context.toBlockHeight,
                         context.remaining,
                     );
                     return options.getQuery(context)
                         .then((response) => {
-                            options.onResponse(response);
+                            return options.onResponse(response);
                         })
                         .then(() => {
                             context.fromBlockHeight = context.toBlockHeight + 1;
@@ -71,6 +73,8 @@ function subscribe(options) {
             .catch((error) => {
                 if (options.onError) {
                     options.onError(error);
+                } else {
+                    debug('%O', error);
                 }
                 if (context.abortOnError) {
                     debug('stopping on next loop');
@@ -91,4 +95,87 @@ function subscribe(options) {
     };
 }
 
-export default subscribe;
+/**
+* Subscribe to an fcl.getEventsAtBlockHeightRange request across a range of
+* block heights, including newly created blocks.
+* @public
+* @param {Object} options
+* @param {Object} options.fcl pointer to @onflow/fcl
+* @param {String} options.event event to subscribe to
+* @param {Function} options.onEvent called once per event
+* @param {Function} [options.onError] error handler
+* @param {Integer} [options.range = 249] block range to query per iteration
+* @param {Integer} [options.fromBlockHeight = <current>] starting block height
+* @param {Integer} [options.sleepTime = 1000] time to sleep between iterations
+* @param {Boolean} [options.abortOnError = false] abort subscription on error
+* @return {Function} unsubscribe
+*/
+function subscribeToEvent(options) {
+    const _options = {
+        block: options.fcl.block,
+        event: options.event,
+        getQuery: function(context) {
+            return options.fcl.send([
+                options.fcl.getEventsAtBlockHeightRange(
+                    options.event,
+                    context.fromBlockHeight,
+                    context.toBlockHeight,
+                ),
+            ]);
+        },
+        onResponse: function(response) {
+            return options.fcl.decode(response)
+                .then((events) => {
+                    events.forEach((event) => {
+                        options.onEvent(event);
+                    });
+                });
+        },
+    };
+    if (options.onError) _options.onError = options.onError;
+    if (options.range) _options.range = options.range;
+    if (options.sleepTime) _options.sleepTime = options.sleepTime;
+    if (options.abortOnError) _options.abortOnError = options.abortOnError;
+    if (options.fromBlockHeight) {
+        _options.fromBlockHeight = options.fromBlockHeight;
+    }
+
+    return subscribe(_options);
+}
+
+/**
+* Subscribe to an fcl.getEventsAtBlockHeightRange request across a range of
+* block heights, including newly created blocks.
+* @public
+* @param {Object} options
+* @param {Object} options.fcl pointer to @onflow/fcl
+* @param {Array} options.events array of events to subscribe to
+* @param {Function} options.onEvent called once per event (for any event)
+* @param {Function} [options.onError] error handler
+* @param {Integer} [options.range = 249] block range to query per iteration
+* @param {Integer} [options.fromBlockHeight = <current>] starting block height
+* @param {Integer} [options.sleepTime = 1000] time to sleep between iterations
+* @param {Boolean} [options.abortOnError = false] abort subscription on error
+* @return {Function} unsubscribe
+*/
+function subscribeToEvents(options) {
+    const unsubscribes = [];
+    options.events.forEach((next) => {
+        const localOptions = Object.assign({}, options);
+        localOptions.event = next;
+        unsubscribes.push(
+            subscribeToEvent(localOptions),
+        );
+    });
+    return function() {
+        unsubscribes.forEach((next) => {
+            next();
+        });
+    };
+}
+
+export {
+    subscribe,
+    subscribeToEvent,
+    subscribeToEvents,
+};
