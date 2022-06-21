@@ -30,6 +30,7 @@ function subscribe(options) {
     * @private
     */
     function _loop() {
+        if (context.stop) return;
         options.block({ sealed: true })
             .then((response) => {
                 context.height = response.height;
