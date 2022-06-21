@@ -1,5 +1,7 @@
 /* global setTimeout */
 
+const debug = require('debug')('fcl-subscribe');
+
 /**
 * Subscribe an @onflow/fcl request across a range of block heights, including
 * newly created blocks.
@@ -18,6 +20,8 @@
 * @return {Function} unsubscribe
 */
 function subscribe(options) {
+    debug('initializing subscription for options: %O', options);
+
     const context = {
         fromBlockHeight: options.fromBlockHeight,
         range: options.range || 249,
@@ -44,6 +48,11 @@ function subscribe(options) {
                     (context.remaining >= context.range ?
                         context.range : context.remaining);
                 if (context.remaining > 0) {
+                    debug('querying fromBlockHeight=%d toBlockHeight=%d (remaining=%d)',
+                        context.fromBlockHeight,
+                        context.toBlockHeight,
+                        context.remaining,
+                    );
                     return options.getQuery(context)
                         .then((response) => {
                             options.onResponse(response);
@@ -52,6 +61,10 @@ function subscribe(options) {
                             context.fromBlockHeight = context.toBlockHeight + 1;
                         });
                 } else {
+                    debug('remaining=%d for block height=%d',
+                        context.remaining,
+                        context.height,
+                    );
                     return Promise.resolve();
                 }
             })
@@ -60,6 +73,7 @@ function subscribe(options) {
                     options.onError(error);
                 }
                 if (context.abortOnError) {
+                    debug('stopping on next loop');
                     context.stop = true;
                 }
             })
@@ -72,6 +86,7 @@ function subscribe(options) {
     _loop();
 
     return function() {
+        debug('stopping on next loop');
         context.stop = true;
     };
 }
