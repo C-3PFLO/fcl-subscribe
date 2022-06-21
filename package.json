@@ -1,6 +1,6 @@
 {
     "name": "fcl-subscribe",
-    "version": "0.1.3",
+    "version": "0.1.5",
     "description": "Subscribe to Flow blockchain events",
     "main": "build/fcl-subscribe.js",
     "scripts": {
@@ -34,17 +34,19 @@
     },
     "homepage": "https://github.com/C-3PFLO/fcl-subscribe#readme",
     "devDependencies": {
+        "@onflow/fcl": "^0.0.78",
+        "@onflow/types": "^0.0.6",
         "eslint": "^8.6.0",
         "eslint-config-google": "^0.14.0",
         "eslint-plugin-jest": "^23.17.1",
         "jest": "^27.4.7",
         "jest-junit": "^13.0.0",
-        "@onflow/fcl": "^0.0.78",
-        "@onflow/types": "^0.0.6"
+        "supports-color": "^9.2.2"
     },
     "dependencies": {
         "@babel/cli": "^7.10.3",
         "@babel/core": "^7.10.3",
-        "@babel/preset-env": "^7.10.3"
+        "@babel/preset-env": "^7.10.3",
+        "debug": "^4.3.4"
     }
 }

@@ -18,7 +18,6 @@ const unsubscribe = subscribe({
     // build fcl query to subscribe to, typically fcl.send with an
     // fcl.getEventsAtBlockHeightRange builder
     getQuery: function(context) {
-        console.debug('fcl.send for context =', context);
         return fcl.send([
             fcl.getEventsAtBlockHeightRange(
                 'A.3c7e227e52ac6c0d.Flovatar.Created',
@@ -29,7 +28,6 @@ const unsubscribe = subscribe({
     },
     // process the subscription response
     onResponse: function(response) {
-        console.debug('checking response for events');
         // when subscribing to fcl.send, the response must be decoded with
         // fcl.decode
         fcl.decode(response).then((events) => {
@@ -43,4 +41,5 @@ const unsubscribe = subscribe({
     onError: console.error,
     // optionally abort the subscription on error (vs. continuing to poll)
     abortOnError: true,
+    sleepTime: 5000,
 });

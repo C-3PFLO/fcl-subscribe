@@ -46,3 +46,5 @@ The demo can be run using
 ```
 npm run demo
 ```
+
+This module uses [`debug`](https://github.com/debug-js/debug) for optional logging.  To enable, set `DEBUG=fcl-subscribe`.
