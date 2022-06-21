@@ -24,7 +24,7 @@ Import `fcl-subscribe` and use it in conjunction with `@onflow/fcl`
 
 ```js
 import * as fcl from '@onflow/fcl';
-import subscribe from 'fcl-subscribe';
+import { subscribe } from 'fcl-subscribe';
 
 fcl.config(/* arguments */)
 
@@ -39,12 +39,31 @@ subscribe({
 });
 ```
 
-See [`demo.js`](demo/demo.js) for working sample and [`fcl-subscribe`](src/fcl-subscribe.js) for the full set of available options.
+See [`demo-subscribe.js`](demo/demo-subscribe.js) for working sample and [`fcl-subscribe`](src/fcl-subscribe.js) for the full set of available options.
 
-The demo can be run using
+When specifically subscribing to events, `subscribeToEvent` is provided as a connivence wrapper to build to proper query (wrapping `fcl.send` and `fcl.getEventsAtBlockHeightRange`) and initial processing of the response (wrapping `fcl.decode`).  
+
+This module also provides `subscribeToEvents` to subscribe to multiple events.
+
+```js
+import * as fcl from '@onflow/fcl';
+import { subscribeToEvents } from 'fcl-subscribe';
+
+fcl.config(/* arguments */)
+
+subscribeToEvents({
+    fcl: fcl,
+    events: [/* list of events */],
+    onEvent: console.log,
+});
+```
+
+See [`demo-subscribe-to-events.js`](demo/demo-subscribe-to-events.js) for working sample.  The demo can be run using
 
 ```
 npm run demo
 ```
+
+### Debugging
 
 This module uses [`debug`](https://github.com/debug-js/debug) for optional logging.  To enable, set `DEBUG=fcl-subscribe`.

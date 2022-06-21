@@ -1,6 +1,6 @@
 {
     "name": "fcl-subscribe",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "Subscribe to Flow blockchain events",
     "main": "build/fcl-subscribe.js",
     "scripts": {
@@ -8,7 +8,7 @@
         "check": "./node_modules/.bin/eslint src test",
         "test": "jest --coverage",
         "test:watch": "jest --coverage --watch",
-        "demo": "npm run build; node build/demo.js"
+        "demo": "npm run build; node build/demo-subscribe-to-events.js"
     },
     "jest": {
         "reporters": [
