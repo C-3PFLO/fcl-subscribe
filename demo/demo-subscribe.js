@@ -28,8 +28,7 @@ const unsubscribe = subscribe({
     },
     // process the subscription response
     onResponse: function(response) {
-        // when subscribing to fcl.send, the response must be decoded with
-        // fcl.decode
+        // when subscribing to fcl.send, the response must be decoded with fcl.decode
         fcl.decode(response).then((events) => {
             if (events && events.length > 0) {
                 console.log(events);
@@ -39,7 +38,4 @@ const unsubscribe = subscribe({
         });
     },
     onError: console.error,
-    // optionally abort the subscription on error (vs. continuing to poll)
-    abortOnError: true,
-    sleepTime: 5000,
 });

@@ -32,7 +32,4 @@ const unsubscribe = subscribeToEvents({
         }
     },
     onError: console.error,
-    // optionally abort the subscription on error (vs. continuing to poll)
-    abortOnError: true,
-    sleepTime: 1000,
 });
