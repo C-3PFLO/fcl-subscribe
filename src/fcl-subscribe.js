@@ -2,6 +2,11 @@
 
 const debug = require('debug')('fcl-subscribe');
 
+const SleepTimes = {
+    SLOW: 60000,
+    FAST: 1000,
+};
+
 /**
 * Subscribe to an @onflow/fcl request across a range of block heights, including
 * newly created blocks.
@@ -10,12 +15,11 @@ const debug = require('debug')('fcl-subscribe');
 * @param {Function} options.block fcl.block function
 * @param {Function} options.getQuery an fcl.send function, called with the current
 * block context to query the next range
-* @param {Function} options.onResponse response handler, which should call fcl.decode
-* to parse the response data
+* @param {Function} options.onResponse response handler, which should call fcl.decode to parse the response data.  If the response handler is asynchronous it can return a promise to wait for the handle to complete.
 * @param {Function} [options.onError] error handler
 * @param {Integer} [options.range = 249] block range to query per iteration
 * @param {Integer} [options.fromBlockHeight = <current>] starting block height
-* @param {Integer} [options.sleepTime = 1000] time to sleep between iterations
+* @param {Integer} [options.sleepTime = 60000] time to sleep between iterations when remaining blocks < 249 (ie: reading from blocks as they are finalized).  When remaining blocks >= 249, sleep time is 1000ms.
 * @param {Boolean} [options.abortOnError = false] abort subscription on error
 * @return {Function} unsubscribe
 */
@@ -25,7 +29,6 @@ function subscribe(options) {
     const context = {
         event: options.event,
         fromBlockHeight: options.fromBlockHeight,
-        sleepTime: options.sleepTime || 1000,
         range: options.range || 249,
         abortOnError: typeof options.abortOnError === 'undefined' ?
             false : options.abortOnError,
@@ -45,9 +48,14 @@ function subscribe(options) {
                 context.fromBlockHeight = typeof context.fromBlockHeight !== 'undefined' ?
                     context.fromBlockHeight : context.height;
                 context.remaining = context.height - context.fromBlockHeight;
-                context.toBlockHeight = context.fromBlockHeight +
-                    (context.remaining >= context.range ?
-                        context.range : context.remaining);
+                context.toBlockHeight = context.fromBlockHeight;
+                if (context.remaining >= context.range) {
+                    context.sleepTime = SleepTimes.FAST;
+                    context.toBlockHeight += context.range;
+                } else {
+                    context.sleepTime = options.sleepTime || SleepTimes.SLOW;
+                    context.toBlockHeight += context.remaining;
+                }
                 if (context.remaining > 0) {
                     debug('querying %s fromBlockHeight=%d toBlockHeight=%d (remaining=%d)',
                         context.event || '',

@@ -77,7 +77,7 @@ describe('fcl-subscribe', () => {
                 expect(context).toEqual({
                     range: 249,
                     fromBlockHeight: 950,
-                    sleepTime: 1000,
+                    sleepTime: 60000,
                     abortOnError: false,
                     height: 1000,
                     remaining: 50,
@@ -95,6 +95,7 @@ describe('fcl-subscribe', () => {
     it('fromBlockHeight === undefined', (done) => {
         let calls = 0;
         const unsubscribe = subscribe({
+            sleepTime: 500, // don't let test wait too long
             // no fromBlockHeight
             block: function() {
                 if (calls === 0) {
@@ -112,12 +113,13 @@ describe('fcl-subscribe', () => {
                 expect(context).toEqual({
                     range: 249,
                     fromBlockHeight: 1000,
-                    sleepTime: 1000,
+                    sleepTime: 500,
                     abortOnError: false,
                     height: 1100,
                     remaining: 100,
                     toBlockHeight: 1100,
                 });
+                done();
                 return mockFcl.send();
             },
             onResponse: function(response) {

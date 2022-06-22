@@ -47,7 +47,7 @@ When specifically subscribing to events, `subscribeToEvent` is provided as a con
 import * as fcl from '@onflow/fcl';
 import { subscribeToEvents } from 'fcl-subscribe';
 
-fcl.config(/* arguments */)
+fcl.config(/* arguments */);
 
 subscribeToEvents({
     fcl: fcl,
