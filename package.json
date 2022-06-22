@@ -1,6 +1,6 @@
 {
     "name": "fcl-subscribe",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "description": "Subscribe to Flow blockchain events",
     "main": "build/fcl-subscribe.js",
     "scripts": {
