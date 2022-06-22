@@ -8,12 +8,12 @@ const SleepTimes = {
 };
 
 /**
-* Subscribe to an @onflow/fcl request across a range of block heights, including newly created blocks.
+* Subscribe to an `@onflow/fcl` request across a range of block heights, including newly created blocks.
 * @public
 * @param {Object} options
-* @param {Function} options.block fcl.block function, used to determing current block height
-* @param {Function} options.getQuery an fcl.send function, called with the current block context to query the next range
-* @param {Function} options.onResponse response handler, which should call fcl.decode to parse the response data.  If the response handler is asynchronous it can return a promise to wait for the handle to complete.
+* @param {Function} options.block `fcl.block` function, used to determing current block height
+* @param {Function} options.getQuery an `fcl.send` function, called with the current block context to query the next range
+* @param {Function} options.onResponse response handler, which should call `fcl.decode` to parse the response data.  If the response handler is asynchronous it can return a promise to wait for the handle to complete.
 * @param {Function} [options.onError] error handler
 * @param {Integer} [options.range = 249] block range to query per iteration
 * @param {Integer} [options.fromBlockHeight = <current>] starting block height
@@ -102,11 +102,10 @@ function subscribe(options) {
 }
 
 /**
-* Subscribe to an fcl.getEventsAtBlockHeightRange request across a range of
-* block heights, including newly created blocks.
+* Subscribe to an `fcl.getEventsAtBlockHeightRange` request across a range of block heights, including newly created blocks.
 * @public
 * @param {Object} options
-* @param {Object} options.fcl pointer to @onflow/fcl
+* @param {Object} options.fcl `@onflow/fcl` module
 * @param {String} options.event event type to subscribe to
 * @param {Function} options.onEvent called once per event
 * @param {Function} [options.onError] error handler
@@ -150,11 +149,10 @@ function subscribeToEvent(options) {
 }
 
 /**
-* Subscribe to an fcl.getEventsAtBlockHeightRange request across a range of
-* block heights, including newly created blocks.
+* Subscribe to a list of `fcl.getEventsAtBlockHeightRange` requests across a range of block heights, including newly created blocks.
 * @public
 * @param {Object} options
-* @param {Object} options.fcl pointer to @onflow/fcl
+* @param {Object} options.fcl `@onflow/fcl` module
 * @param {Array} options.events array of event types to subscribe to
 * @param {Function} options.onEvent called once per event (for any event)
 * @param {Function} [options.onError] error handler
