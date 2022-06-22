@@ -42,7 +42,7 @@ subscribe({
 });
 ```
 
-See [`demo-subscribe.js`](demo/demo-subscribe.js) for working sample and the full set of options [here](docs/global.html#subscribe).
+See [API](API.md) for the full set of supported arguments.
 
 When specifically subscribing to events, `subscribeToEvent` is provided as a convenience wrapper for the query (wrapping `fcl.send` and `fcl.getEventsAtBlockHeightRange`) and initial processing of the response (wrapping `fcl.decode`).  This module also provides `subscribeToEvents` to subscribe to multiple events in a single subscription.
 
@@ -59,9 +59,7 @@ subscribeToEvents({
 });
 ```
 
-*NOTE: `subscribeToEvents` supports a single `onEvent` callback for all event types.  Clients can switch on `event.eventType` if event types require different handling.*
-
-See [`demo-subscribe-to-events.js`](demo/demo-subscribe-to-events.js) for working sample and the full set of options [here](docs/global.html#subscribeToEvents).  The demo can be run using
+See [`demo-subscribe-to-events.js`](demo/demo-subscribe-to-events.js) for working sample.  The demo can be run using:
 
 ```
 npm run demo
