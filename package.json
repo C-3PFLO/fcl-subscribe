@@ -5,6 +5,7 @@
     "main": "build/fcl-subscribe.js",
     "scripts": {
         "build": "babel src demo -d build",
+        "docs": "jsdoc src/fcl-subscribe.js -d docs",
         "check": "./node_modules/.bin/eslint src test",
         "test": "jest --coverage",
         "test:watch": "jest --coverage --watch",
@@ -41,6 +42,7 @@
         "eslint-plugin-jest": "^23.17.1",
         "jest": "^27.4.7",
         "jest-junit": "^13.0.0",
+        "jsdoc": "^3.6.10",
         "supports-color": "^9.2.2"
     },
     "dependencies": {
