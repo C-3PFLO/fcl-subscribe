@@ -12,14 +12,13 @@ const SleepTimes = {
 * newly created blocks.
 * @public
 * @param {Object} options
-* @param {Function} options.block fcl.block function
-* @param {Function} options.getQuery an fcl.send function, called with the current
-* block context to query the next range
+* @param {Function} options.block fcl.block function, used to determing current block height
+* @param {Function} options.getQuery an fcl.send function, called with the current block context to query the next range
 * @param {Function} options.onResponse response handler, which should call fcl.decode to parse the response data.  If the response handler is asynchronous it can return a promise to wait for the handle to complete.
 * @param {Function} [options.onError] error handler
 * @param {Integer} [options.range = 249] block range to query per iteration
 * @param {Integer} [options.fromBlockHeight = <current>] starting block height
-* @param {Integer} [options.sleepTime = 60000] time to sleep between iterations when remaining blocks < 249 (ie: reading from blocks as they are finalized).  When remaining blocks >= 249, sleep time is 1000ms.
+* @param {Integer} [options.sleepTime = 60000] time to sleep between iterations when remaining blocks <= 250 (ie: reading from blocks as they are finalized).  When remaining blocks > 250, sleep time is 1000ms.
 * @param {Boolean} [options.abortOnError = false] abort subscription on error
 * @return {Function} unsubscribe
 */
