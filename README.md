@@ -53,7 +53,7 @@ import { subscribeToEvents } from 'fcl-subscribe';
 fcl.config(/* arguments */);
 
 subscribeToEvents({
-    fcl: fcl,
+    fcl: fcl, // fcl is injected
     events: [/* list of event types to subscribe to */],
     onEvent: console.log,
 });

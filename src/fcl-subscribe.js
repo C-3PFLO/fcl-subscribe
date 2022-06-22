@@ -107,7 +107,7 @@ function subscribe(options) {
 * @public
 * @param {Object} options
 * @param {Object} options.fcl pointer to @onflow/fcl
-* @param {String} options.event event to subscribe to
+* @param {String} options.event event type to subscribe to
 * @param {Function} options.onEvent called once per event
 * @param {Function} [options.onError] error handler
 * @param {Integer} [options.range = 249] block range to query per iteration
@@ -155,7 +155,7 @@ function subscribeToEvent(options) {
 * @public
 * @param {Object} options
 * @param {Object} options.fcl pointer to @onflow/fcl
-* @param {Array} options.events array of events to subscribe to
+* @param {Array} options.events array of event types to subscribe to
 * @param {Function} options.onEvent called once per event (for any event)
 * @param {Function} [options.onError] error handler
 * @param {Integer} [options.range = 249] block range to query per iteration
